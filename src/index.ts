@@ -40,6 +40,7 @@ class ResizeHandle extends events.EventEmitter {
 
     this.handleElt.addEventListener("dblclick", this.onDoubleClick);
     this.handleElt.addEventListener("mousedown", this.onMouseDown);
+    this.handleElt.addEventListener("touchstart", this.onMouseDown);
   }
 
   private onDoubleClick = (event: MouseEvent) => {
@@ -113,13 +114,17 @@ class ResizeHandle extends events.EventEmitter {
       document.documentElement.classList.remove("handle-dragging", directionClass);
 
       dragTarget.removeEventListener("mousemove", onMouseMove);
+      dragTarget.removeEventListener("touchmove", onMouseMove);
       dragTarget.removeEventListener("mouseup", onMouseUp);
+      dragTarget.removeEventListener("touchend", onMouseUp);
 
       this.emit("dragEnd");
     };
 
     dragTarget.addEventListener("mousemove", onMouseMove);
+    dragTarget.addEventListener("touchmove", onMouseMove);
     dragTarget.addEventListener("mouseup", onMouseUp);
+    dragTarget.addEventListener("touchend", onMouseUp);
   };
 }
 
